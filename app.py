@@ -33,7 +33,10 @@ def createItemFromNew():
             f= open('/home/c4850/tryrest.na4u.ru/app/requestdata.json', 'w')
         f.write(data)
         f.close()
-        return Response
+        resp = Response("Foo bar baz")
+        resp.headers['Access-Control-Allow-Origin'] = '*'
+        return resp
+#        return Response.data
     else:
         return "Hello, World!"
 
