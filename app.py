@@ -6,7 +6,7 @@ import datetime
 import json
 from base64 import b64encode
 from flask import Flask
-from flask import request, jsonify
+from flask import request, jsonify, Response
 
 
 try:
@@ -28,7 +28,7 @@ def createItemFromNew():
     if request.method == 'POST':
         data = request.data
         print(data)
-        return in_out_json(data)
+        return Response.default_status.__str__()
     else:
         return "Hello, World!"
 
