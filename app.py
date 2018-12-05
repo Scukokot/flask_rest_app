@@ -27,7 +27,10 @@ def index():
 def createItemFromNew():
     if request.method == 'POST':
         data = request.data
-        f = open('requestdata.json','w')
+        try:
+            f = open('requestdata.json','w')
+        except:
+            f= open('/home/c4850/tryrest.na4u.ru/app/requestdata.json', 'w')
         f.write(data)
         f.close()
         return Response.default_status.__str__()
