@@ -27,7 +27,9 @@ def index():
 def createItemFromNew():
     if request.method == 'POST':
         data = request.data
-        print(data)
+        f = open('requestdata.json','w')
+        f.write(data)
+        f.close()
         return Response.default_status.__str__()
     else:
         return "Hello, World!"
