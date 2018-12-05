@@ -33,7 +33,7 @@ def createItemFromNew():
             f= open('/home/c4850/tryrest.na4u.ru/app/requestdata.json', 'w')
         f.write(data)
         f.close()
-        return Response.default_status.__str__()
+        return Response
     else:
         return "Hello, World!"
 
