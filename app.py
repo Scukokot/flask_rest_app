@@ -2,7 +2,6 @@
 
 import os
 
-import catch as catch
 from flask import Flask
 
 try:
