@@ -27,6 +27,7 @@ def index():
 def createItemFromNew():
     if request.method == 'POST':
         data = request.data
+        print(data)
         return in_out_json(data)
     else:
         return "Hello, World!"
