@@ -1,7 +1,7 @@
 #!/home/c4850/tryrest.na4u.ru/.env/bin/python
 import json
 from aiohttp import web
-from config import VSTS_PUSH_PATH
+import config
 from utils import get_logger
 
 logger = get_logger('RestHandler')
@@ -16,6 +16,6 @@ async def from_vsts(req):
     return web.Response(text=json.dumps(response_obj))
 
 app = web.Application()
-app.router.add_post(VSTS_PUSH_PATH, from_vsts)
+app.router.add_post(config.VSTS_PUSH_PATH, from_vsts)
 
-web.run_app(app, port=5000)
+web.run_app(app, host=config.IP, port=config.PORT)
