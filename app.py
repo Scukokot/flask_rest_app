@@ -15,7 +15,8 @@ async def from_vsts(req):
     response_obj = {'status': data}
     return web.Response(text=json.dumps(response_obj))
 
-app = web.Application()
-app.router.add_post(config.VSTS_PUSH_PATH, from_vsts)
+if __name__ == '__main__':
+    app = web.Application()
+    app.router.add_post(config.VSTS_PUSH_PATH, from_vsts)
 
-web.run_app(app, host=config.IP, port=config.PORT)
+    web.run_app(app, host=config.IP, port=config.PORT)
