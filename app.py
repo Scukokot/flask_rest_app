@@ -1,49 +1,22 @@
 #!/home/c4850/tryrest.na4u.ru/.env/bin/python
-
-import os
-import requests
-import datetime
 import json
-from base64 import b64encode
-from flask import Flask
-from flask import request, jsonify, Response
+from aiohttp import web
+import config
+from utils import get_logger
+
+logger = get_logger('RestHandler')
 
 
-try:
-    IP = os.environ['APP_IP']
-    PORT = int(os.environ['APP_PORT'])
-except:
-    IP = '127.0.0.1'
-    PORT = '5000'
+async def from_vsts(req):
+    logger.debug('Request with params :: {}'.format(req.query))
+    data = await req.json()
+    logger.debug('Request with body :: {}'.format(data))
 
-app = Flask(__name__)
-
-
-@app.route('/')
-def index():
-    return "Hello, World!"
-
-@app.route('/api/v_0_0/push/ASUI/to_jira/created_item', methods=['GET', 'POST'])
-def createItemFromNew():
-    if request.method == 'POST':
-        data = request.data
-        try:
-            f = open('requestdata.json','w')
-        except:
-            f= open('/home/c4850/tryrest.na4u.ru/app/requestdata.json', 'w')
-        f.write(data)
-        f.close()
-        resp = Response("Foo bar baz")
-        resp.headers['Access-Control-Allow-Origin'] = '*'
-        return resp
-#        return Response.data
-    else:
-        return "Hello, World!"
-
-def in_out_json(data):
-    e = data
-    return e
-
+    response_obj = {'status': data}
+    return web.Response(text=json.dumps(response_obj))
 
 if __name__ == '__main__':
-    app.run(host=IP, port=PORT, debug=True)
+    app = web.Application()
+    app.router.add_post(config.VSTS_PUSH_PATH, from_vsts)
+
+    web.run_app(app, host=config.IP, port=config.PORT)
